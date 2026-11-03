@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% block title %}Dashboard{% endblock %}{% block page_heading %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome"><div><div class="eyebrow light">YOUR CAREER AT A GLANCE</div><h2>Stay focused on your next opportunity.</h2><p>Keep every application, company, and connection in one organized place.</p></div><a class="btn btn-white" href="{{ url_for('create_entity', entity='applications') }}">＋ Track application</a></section>
+<section class="stats-grid">
+  <div class="stat-card"><div class="stat-top"><span class="stat-icon purple">▤</span><span class="stat-caption">COMPANIES</span></div><div class="stat-number">{{ stats.companies }}</div><div class="stat-foot">Organizations tracked</div></div>
+  <div class="stat-card"><div class="stat-top"><span class="stat-icon blue">▣</span><span class="stat-caption">JOBS</span></div><div class="stat-number">{{ stats.jobs }}</div><div class="stat-foot">Opportunities saved</div></div>
+  <div class="stat-card"><div class="stat-top"><span class="stat-icon orange">◷</span><span class="stat-caption">APPLICATIONS</span></div><div class="stat-number">{{ stats.applications }}</div><div class="stat-foot">Applications submitted</div></div>
+  <div class="stat-card"><div class="stat-top"><span class="stat-icon green">✦</span><span class="stat-caption">INTERVIEWS</span></div><div class="stat-number">{{ stats.interviews }}</div><div class="stat-foot">Interview opportunities</div></div>
+  <div class="stat-card"><div class="stat-top"><span class="stat-icon pink">♧</span><span class="stat-caption">OFFERS</span></div><div class="stat-number">{{ stats.offers }}</div><div class="stat-foot">Offers received</div></div>
+</section>
+<section class="panel"><div class="panel-head"><div><h3>Recent applications</h3><p>Your latest activity</p></div><a class="text-link" href="{{ url_for('list_entity', entity='applications') }}">View all →</a></div>
+{% if recent %}<div class="table-wrap"><table><thead><tr><th>ROLE</th><th>COMPANY</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>{% for row in recent %}<tr><td class="strong">{{ row.job_title }}</td><td>{{ row.company_name }}</td><td>{{ row.application_date }}</td><td><span class="status status-{{ row.status|lower }}">{{ row.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><div class="empty-icon">▤</div><h3>No applications yet</h3><p>Add your first application to start tracking your search.</p><a class="btn btn-primary" href="{{ url_for('create_entity', entity='applications') }}">＋ Add application</a></div>{% endif %}</section>
+{% endblock %}
