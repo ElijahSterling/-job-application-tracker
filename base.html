@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Job Tracker{% endblock %} | Elijah Sterling</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">JT</span><span>Job Tracker<small>Elijah Sterling</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <nav>
+      <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">▦ <span>Dashboard</span></a>
+      <a class="nav-link {% if request.path.startswith('/companies') %}active{% endif %}" href="{{ url_for('list_entity', entity='companies') }}">▤ <span>Companies</span></a>
+      <a class="nav-link {% if request.path.startswith('/jobs') %}active{% endif %}" href="{{ url_for('list_entity', entity='jobs') }}">▣ <span>Jobs</span></a>
+      <a class="nav-link {% if request.path.startswith('/applications') %}active{% endif %}" href="{{ url_for('list_entity', entity='applications') }}">◷ <span>Applications</span></a>
+      <a class="nav-link {% if request.path.startswith('/contacts') %}active{% endif %}" href="{{ url_for('list_entity', entity='contacts') }}">♙ <span>Contacts</span></a>
+      <a class="nav-link {% if request.path.startswith('/job-match') %}active{% endif %}" href="{{ url_for('job_match') }}">✦ <span>Job Match</span></a>
+    </nav>
+    <div class="sidebar-bottom"><div class="avatar">ES</div><div><strong>Elijah Sterling</strong><small>COP4751 Project</small></div></div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><div><span class="eyebrow">CAREER WORKSPACE</span><h1>{% block page_heading %}Dashboard{% endblock %}</h1></div><div class="topbar-date">{{ today if today else 'Your career, organized.' }}</div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-wrap">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+    {% block content %}{% endblock %}
+    <footer>Job Application Tracker <span>•</span> Built by Elijah Sterling for COP4751</footer>
+  </main>
+</body>
+</html>
